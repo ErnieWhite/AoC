@@ -11,9 +11,9 @@ For example:
 - 123 -> x means that the signal 123 is provided to wire x.
 - x AND y -> z means that the [bitwise AND](https://en.wikipedia.org/wiki/Bitwise_operation#AND) of wire x and wire y is provided to wire z.
 - p LSHIFT 2 -> q means that the value from wire p is [left-shifted](https://en.wikipedia.org/wiki/Logical_shift) by 2 and then provided to wire q.
-- NOT e -> f means that the [bitwise complement](https://end.wikipedia.org/wiki/Bitwise_operation#NOT) of the value from wire e is provided to wire f.
+- NOT e -> f means that the [bitwise complement](https://en.wikipedia.org/wiki/Bitwise_operation#NOT) of the value from wire e is provided to wire f.
 
-Other possible gates include OR ([bitwise OR](https://en.wikipedia.org/wiki/Bitwise_operation#OR)) and RSHIFT ([right-shift](https://en.wikipedia.org/wiki/Logical_shift)). If, for some reason, you'd like to **emulate** the circuit instead, almost all programming languages (for example, [C](https://en.wikipedia.org/wiki/Bitwise_operations_in_C), [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaSdcript/Reference/Operators/Bitwise_Operators), or [Python](https://wiki.python.org/moin/bitwiseOperators)) provide operators for these gates.
+Other possible gates include OR ([bitwise OR](https://en.wikipedia.org/wiki/Bitwise_operation#OR)) and RSHIFT ([right-shift](https://en.wikipedia.org/wiki/Logical_shift)). If, for some reason, you'd like to **emulate** the circuit instead, almost all programming languages (for example, [C](https://en.wikipedia.org/wiki/Bitwise_operations_in_C), [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#bitwise_shift_operators), or [Python](https://wiki.python.org/moin/bitwiseOperators)) provide operators for these gates.
 
 For example, here is a simple circuit:
 
