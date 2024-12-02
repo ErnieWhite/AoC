@@ -35,6 +35,7 @@
  * 
  * The levels are either all increasing or all decreasing.
  * Any two adjacent levels differ by at least one and at most three.
+ *
  * In the example above, the reports can be found safe or unsafe by checking 
  * those rules:
  * 
@@ -52,14 +53,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 #define filename_length (256)
 #define max_per_line (8) // at most 8 readings per line
 
 int main(int argc, char *argv[]) {
 
-    FILE *fp;
-
+    int safe_count = 0;
     char filename[filename_length] = {0};
 
     // did the user specify a filename at the command line
@@ -69,8 +70,11 @@ int main(int argc, char *argv[]) {
         strncpy(filename, "input.txt", filename_length);
     }
 
-    fp = fopen(filename, "r");
 
+    // open the specified file
+    FILE *fp = fopen(filename, "r");
+
+    // make sure the fopen was successfull
     if (fp == NULL) {
         printf("failed to open %s", filename);
     }
@@ -84,12 +88,41 @@ int main(int argc, char *argv[]) {
         
         // the input file at most has 8 readings per line
         int readings[8] = {0};
-
+    
+        // scan the string for ints and save how many we read in count
         int count = sscanf(line, "%d %d %d %d %d %d %d %d", &readings[0], &readings[1], &readings[2], &readings[3], &readings[4], &readings[5], &readings[6], &readings[7]);
+        
+        int change = readings[1] - readings[0];  // 1 for up -1 for down
+        int last_slope = change / abs(change);
 
-        for (int i = 0; i < count; i++) {
-            printf("%d ", readings[i]);
+        int safe = 1; // assume safe until proven safe
+        for (int i = 1; i < count; i++) {
+            change = readings[i] - readings[i-1];
+            int this_slope = change / abs(change); // are we going up or down
+//            printf("r1: %2d r2: %2d ts: %2d ls: %2d c: %2d ", readings[i-1], readings[i], this_slope, last_slope, change);
+
+
+            // what is considered safe
+            // Any two adjacent levels differ by at least one and at most three.
+            if (abs(change) < 1 || abs(change) > 3) {
+                safe = 0;
+ //               printf("Change out of spec ");
+            } 
+
+            // The levels are either all increasing or all decreasing.
+            if (this_slope != last_slope) {
+                safe = 0;
+//                printf("Slope changed direction ");
+            } 
+
+//            printf("\n");
+           
+            last_slope = this_slope;
         }
-        printf("\n");
+//        printf("\n");
+        if (safe) {
+           safe_count++;
+        }
     }
+    printf("Safe Reports: %d\n", safe_count);
 }
