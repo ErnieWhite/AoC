@@ -48,25 +48,6 @@
  * So, in this example, 2 reports are safe.
  * 
  * Analyze the unusual data from the engineers. How many reports are safe? 
- *
- * --- Part Two ---
- * The engineers are surprised by the low number of safe reports until they realize they forgot to tell you about the Problem Dampener.
- * 
- * The Problem Dampener is a reactor-mounted module that lets the reactor safety systems tolerate a single bad level in what would otherwise be a safe report. It's like the bad level never happened!
- * 
- * Now, the same rules apply as before, except if removing a single level from an unsafe report would make it safe, the report instead counts as safe.
- * 
- * More of the above example's reports are now safe:
- * 
- * 7 6 4 2 1: Safe without removing any level.
- * 1 2 7 8 9: Unsafe regardless of which level is removed.
- * 9 7 6 2 1: Unsafe regardless of which level is removed.
- * 1 3 2 4 5: Safe by removing the second level, 3.
- * 8 6 4 4 1: Safe by removing the third level, 4.
- * 1 3 6 7 9: Safe without removing any level.
- * Thanks to the Problem Dampener, 4 reports are actually safe!
- * 
- * Update your analysis by handling situations where the Problem Dampener can remove a single level from unsafe reports. How many reports are now safe?
  */
 
 #include <stdio.h>
@@ -118,27 +99,27 @@ int main(int argc, char *argv[]) {
         for (int i = 1; i < count; i++) {
             change = readings[i] - readings[i-1];
             int this_slope = change / abs(change); // are we going up or down
-            // printf("r1: %2d r2: %2d ts: %2d ls: %2d c: %2d ", readings[i-1], readings[i], this_slope, last_slope, change);
+//            printf("r1: %2d r2: %2d ts: %2d ls: %2d c: %2d ", readings[i-1], readings[i], this_slope, last_slope, change);
 
 
             // what is considered safe
             // Any two adjacent levels differ by at least one and at most three.
             if (abs(change) < 1 || abs(change) > 3) {
                 safe = 0;
-            // printf("Change out of spec ");
+ //               printf("Change out of spec ");
             } 
 
             // The levels are either all increasing or all decreasing.
             if (this_slope != last_slope) {
                 safe = 0;
-            // printf("Slope changed direction ");
+//                printf("Slope changed direction ");
             } 
 
-            // printf("\n");
+//            printf("\n");
            
             last_slope = this_slope;
         }
-        // printf("\n");
+//        printf("\n");
         if (safe) {
            safe_count++;
         }
