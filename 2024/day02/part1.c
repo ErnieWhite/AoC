@@ -54,6 +54,7 @@
 #include <stdint.h>
 
 #define filename_length (256)
+#define max_per_line (8) // at most 8 readings per line
 
 int main(int argc, char *argv[]) {
 
@@ -80,6 +81,15 @@ int main(int argc, char *argv[]) {
 
     while (fgets(line, 100, fp) != NULL) {
         // now process this line of readings
-        printf("%s", line);
+        
+        // the input file at most has 8 readings per line
+        int readings[8] = {0};
+
+        int count = sscanf(line, "%d %d %d %d %d %d %d %d", &readings[0], &readings[1], &readings[2], &readings[3], &readings[4], &readings[5], &readings[6], &readings[7]);
+
+        for (int i = 0; i < count; i++) {
+            printf("%d ", readings[i]);
+        }
+        printf("\n");
     }
 }
