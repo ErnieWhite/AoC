@@ -4,6 +4,10 @@
 int main(int argc, char *argv[]) {
     FILE *fp;
     char buffer[10];
+    char direction;
+    int distance = 0;
+    int position = 50; // the dial starts at 50
+    int password = 0;
 
     // file to read is specified on the command line.
     if (argc != 2) {
@@ -26,8 +30,27 @@ int main(int argc, char *argv[]) {
             buffer[strlen(buffer)-1] = '\0';
         }
 
-        printf("%s\n", buffer); //
+        printf("%s\t", buffer); //
+
+        sscanf(buffer, "%c%d", &direction, &distance);
+
+        if (direction == 'L') {
+            position -= distance;
+        } else {
+            position += distance;
+        }
+
+
+        position = (position % 100 + 100) % 100; // wrap around 0-99 safely
+
+        if (position == 0) {
+            password++;
+        }
+
+        printf("%c %d -> %d\n",direction, distance, position);
     }
+
+    printf("Password: %d\n", password);
 
     fclose(fp);
     return 0;
